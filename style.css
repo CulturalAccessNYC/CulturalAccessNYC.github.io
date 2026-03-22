@@ -210,6 +210,7 @@ body {
       margin-right: 20px;
     }
     .nav-list {
+        background: white;
         gap: 1rem;
         font-size: 0.9rem;
         position: fixed;
@@ -227,11 +228,11 @@ ul li {
       margin: 20px 0;
     }
   
-    nav-list a {
+    .nav-list a {
       font-size: 20px;
     }
   
-    #check:checked ~ ul {
+    #check:checked ~ .nav-list {
       right: 0;
     }
 
