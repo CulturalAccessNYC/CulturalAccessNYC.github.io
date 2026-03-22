@@ -9,6 +9,7 @@ body {
     line-height: 1.6;
     color: #222;
     background: #f6f7f9;
+    overflow-x: hidden;
 }
 
 /* Layout */
