@@ -68,7 +68,16 @@ body {
 .nav-list a:hover {
     color: #0066cc;
 }
-
+.checkbtn {
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    display: none;
+  }
+  
+  #check {
+    display: none;
+  }
 /* Hero */
 .hero {
     background-image: url("hero.jpg");
@@ -193,6 +202,11 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
+ .checkbtn {
+      display: block;
+      order: 1;
+      margin-right: 20px;
+    }
     .nav-list {
         gap: 1rem;
         font-size: 0.9rem;
@@ -214,5 +228,8 @@ body {
 
     .cards {
         flex-direction: column;
+    }
+   #check:checked ~ ul {
+      right: 0;
     }
 }
