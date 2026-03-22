@@ -205,6 +205,7 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
  .checkbtn {
+      color: #111;
       display: block;
       order: 1;
       margin-right: 20px;
