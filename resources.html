@@ -12,7 +12,9 @@
 <header class="site-header">
   <div class="container header-inner">
     <a href="index.html" class="logo">ADAptNYC2030</a>
-    <nav>
+  <nav>
+   <input type="checkbox" id="check">
+    <label for="check" class="checkbtn">☰</label>
       <ul class="nav-list">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -43,6 +45,16 @@
     <p>&copy; 2026 ADAptNYC2030 Initiative</p>
   </div>
 </footer>
+<script>
+const checkbox = document.getElementById("check");
 
+checkbox.addEventListener("change", function () {
+  if (this.checked) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
+});
+</script>
 </body>
 </html>
