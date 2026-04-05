@@ -67,6 +67,16 @@
     <p>&copy; 2026 ADAptNYC2030 Initiative</p>
   </div>
 </footer>
+<script>
+const checkbox = document.getElementById("check");
 
+checkbox.addEventListener("change", function () {
+  if (this.checked) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
+});
+</script>
 </body>
 </html>
