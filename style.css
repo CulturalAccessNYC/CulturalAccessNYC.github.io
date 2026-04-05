@@ -1,4 +1,5 @@
 
+
  {
     box-sizing: border-box;
     margin: 0;
@@ -214,19 +215,7 @@ body {
     }
     .nav-list {
         background: white;
-        gap: 1rem;.nav-list {
-    background: white;
-    position: fixed;
-    top: 100%;
-    right: -133vw%;
-    width: 100%;
-    height: calc(100vh - 80px); /* match header height */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: 0.3s ease;
-}
+        gap: 1rem;
         font-size: 0.9rem;
         position: fixed;
         top: 80px;
@@ -259,4 +248,3 @@ ul li {
         flex-direction: column;
     }
 }
-
