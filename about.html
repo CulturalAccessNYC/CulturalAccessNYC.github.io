@@ -13,8 +13,8 @@
   <div class="container header-inner">
     <a href="index.html" class="logo">ADAptNYC2030</a>
     <nav>
-   <input type="checkbox" id="check">
-    <label for="check" class="checkbtn">☰</label>
+      <input type="checkbox" id="check">
+      <label for="check" class="checkbtn">☰</label>
       <ul class="nav-list">
         <li><a href="index.html">Home</a></li>
         <li><a href="resources.html">Resources</a></li>
@@ -37,6 +37,11 @@
       ADAptNYC2030 was created to address long-standing accessibility gaps 
       in New York City’s cultural sector.
     </p>
+
+    <h2 style="margin-top: 40px;">Steering Committee</h2>
+    <div id="members-container"></div>
+
+  </div>
 </section>
 
 <footer class="footer">
@@ -44,6 +49,7 @@
     <p>&copy; 2026 ADAptNYC2030 Initiative</p>
   </div>
 </footer>
+
 <script>
 const checkbox = document.getElementById("check");
 
@@ -55,5 +61,8 @@ checkbox.addEventListener("change", function () {
   }
 });
 </script>
+
+<script src="script.js"></script>
+
 </body>
 </html>
