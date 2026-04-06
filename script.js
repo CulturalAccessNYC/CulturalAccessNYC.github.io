@@ -1,38 +1,33 @@
+<section id="members-container" class="cards" aria-label="Steering Committee Members">
+</section>
+
+<script>
 fetch('SteeringBios.json')
-  .then(res => res.json())
+  .then(response => response.json())
   .then(members => {
     const container = document.getElementById('members-container');
 
-    members.forEach(member => {
-      const card = document.createElement('div');
+    members.forEach((member, index) => {
+      // Unique IDs for ARIA
+      const fullBioId = `full-bio-${index}`;
+      const nameId = `member-name-${index}`;
+
+      const card = document.createElement('section');
       card.className = 'member-card';
-
-      const linksHTML = (member.links || [])
-        .map(link => {
-          if (!link.url) return '';
-          return `<a href="${link.url}" target="_blank">${link.type || 'Link'}</a>`;
-        })
-        .join(' ');
-
-    
-      const image = member.headshot && member.headshot !== ''
-        ? member.headshot
-        : 'images/default.jpg';
+      card.setAttribute('aria-labelledby', nameId);
 
       card.innerHTML = `
-        <img src="${image}" alt="${member.altText || 'Profile photo'}">
+        <img src="${member.headshot}" alt="${member.altText}">
         <div class="card-content">
-          <h3>${member.name || ''}</h3>
-          <p class="title">${member.title || ''}</p>
-          <p class="pronouns">${member.pronouns || ''}</p>
-          <p class="short-bio">${member.shortBio || ''}</p>
-          
+          <h3 id="${nameId}">${member.name}</h3>
+          <p class="pronouns">${member.pronouns}</p>
+          <p class="title">${member.title}</p>
+          <p class="short-bio">${member.shortBio}</p>
+          <p id="${fullBioId}" class="full-bio" hidden>${member.fullBio}</p>
+          <button class="toggle-btn" aria-expanded="false" aria-controls="${fullBioId}">Read More</button>
           <div class="links">
-            ${linksHTML}
+            ${member.links.map(link => `<a href="${link.url}" target="_blank" rel="noopener">${link.type}</a>`).join('')}
           </div>
-
-          <button class="toggle-btn">Read More</button>
-          <p class="full-bio">${member.fullBio || ''}</p>
         </div>
       `;
 
@@ -40,18 +35,18 @@ fetch('SteeringBios.json')
     });
 
 
-    document.querySelectorAll('.toggle-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const bio = btn.nextElementSibling;
+    const toggleButtons = container.querySelectorAll(".toggle-btn");
+    toggleButtons.forEach(btn => {
+      const fullBio = document.getElementById(btn.getAttribute("aria-controls"));
+      fullBio.hidden = true; // ensure hidden for screen readers
 
-        if (bio.style.display === 'block') {
-          bio.style.display = 'none';
-          btn.textContent = 'Read More';
-        } else {
-          bio.style.display = 'block';
-          btn.textContent = 'Show Less';
-        }
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", !expanded);
+        fullBio.hidden = expanded;
+        btn.textContent = expanded ? "Read More" : "Read Less";
       });
     });
   })
   .catch(err => console.error('Error loading:', err));
+</script>
