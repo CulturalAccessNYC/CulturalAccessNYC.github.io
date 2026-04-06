@@ -1,52 +1,104 @@
-<section id="members-container" class="cards" aria-label="Steering Committee Members">
-</section>
-
-<script>
+// Fetch and render member cards
 fetch('SteeringBios.json')
   .then(response => response.json())
-  .then(members => {
+  .then(data => {
     const container = document.getElementById('members-container');
 
-    members.forEach((member, index) => {
-      // Unique IDs for ARIA
-      const fullBioId = `full-bio-${index}`;
-      const nameId = `member-name-${index}`;
-
+    data.forEach((member, index) => {
       const card = document.createElement('section');
       card.className = 'member-card';
+      card.setAttribute('role', 'region'); // landmark for screen readers
+      card.setAttribute('tabindex', '0');  // make focusable via keyboard
+
+      // ID for ARIA labelling
+      const nameId = `member-name-${index}`;
       card.setAttribute('aria-labelledby', nameId);
 
-      card.innerHTML = `
-        <img src="${member.headshot}" alt="${member.altText}">
-        <div class="card-content">
-          <h3 id="${nameId}">${member.name}</h3>
-          <p class="pronouns">${member.pronouns}</p>
-          <p class="title">${member.title}</p>
-          <p class="short-bio">${member.shortBio}</p>
-          <p id="${fullBioId}" class="full-bio" hidden>${member.fullBio}</p>
-          <button class="toggle-btn" aria-expanded="false" aria-controls="${fullBioId}">Read More</button>
-          <div class="links">
-            ${member.links.map(link => `<a href="${link.url}" target="_blank" rel="noopener">${link.type}</a>`).join('')}
-          </div>
-        </div>
-      `;
+      // Image
+      if(member.headshot){
+        const img = document.createElement('img');
+        img.src = member.headshot;
+        img.alt = member.altText || member.name;
+        card.appendChild(img);
+      }
 
+      // Card content
+      const content = document.createElement('div');
+      content.className = 'card-content';
+
+      // Name
+      const nameEl = document.createElement('h3');
+      nameEl.id = nameId;
+      nameEl.textContent = member.name;
+      content.appendChild(nameEl);
+
+      // Pronouns
+      if(member.pronouns){
+        const pronounsEl = document.createElement('div');
+        pronounsEl.className = 'pronouns';
+        pronounsEl.textContent = member.pronouns;
+        content.appendChild(pronounsEl);
+      }
+
+      // Title
+      if(member.title){
+        const titleEl = document.createElement('div');
+        titleEl.className = 'title';
+        titleEl.textContent = member.title;
+        content.appendChild(titleEl);
+      }
+
+      // Short bio
+      if(member.shortBio){
+        const shortBioEl = document.createElement('div');
+        shortBioEl.className = 'short-bio';
+        shortBioEl.textContent = member.shortBio;
+        content.appendChild(shortBioEl);
+      }
+
+      // Full bio toggle
+      if(member.fullBio){
+        const fullBioEl = document.createElement('div');
+        fullBioEl.className = 'full-bio';
+        fullBioEl.textContent = member.fullBio;
+        content.appendChild(fullBioEl);
+
+        const toggleBtn = document.createElement('button');
+        toggleBtn.className = 'toggle-btn';
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleBtn.setAttribute('aria-controls', `full-bio-${index}`);
+        toggleBtn.id = `toggle-btn-${index}`;
+        toggleBtn.textContent = 'Read More';
+
+        fullBioEl.id = `full-bio-${index}`;
+
+        toggleBtn.addEventListener('click', () => {
+          const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+          toggleBtn.setAttribute('aria-expanded', String(!expanded));
+          fullBioEl.style.display = expanded ? 'none' : 'block';
+          toggleBtn.textContent = expanded ? 'Read More' : 'Read Less';
+        });
+
+        content.appendChild(toggleBtn);
+      }
+
+      // Links
+      if(member.links && member.links.length){
+        const linksDiv = document.createElement('div');
+        linksDiv.className = 'links';
+        member.links.forEach(link => {
+          const a = document.createElement('a');
+          a.href = link.url || '#';
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.textContent = link.type;
+          linksDiv.appendChild(a);
+        });
+        content.appendChild(linksDiv);
+      }
+
+      card.appendChild(content);
       container.appendChild(card);
     });
-
-
-    const toggleButtons = container.querySelectorAll(".toggle-btn");
-    toggleButtons.forEach(btn => {
-      const fullBio = document.getElementById(btn.getAttribute("aria-controls"));
-      fullBio.hidden = true; // ensure hidden for screen readers
-
-      btn.addEventListener("click", () => {
-        const expanded = btn.getAttribute("aria-expanded") === "true";
-        btn.setAttribute("aria-expanded", !expanded);
-        fullBio.hidden = expanded;
-        btn.textContent = expanded ? "Read More" : "Read Less";
-      });
-    });
   })
-  .catch(err => console.error('Error loading:', err));
-</script>
+  .catch(err => console.error('Error:', err));
