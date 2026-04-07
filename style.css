@@ -249,7 +249,6 @@ ul li {
     flex-direction: column;
     height: 100%;
 }
-
 /* Name */
 .card-content h3 {
     margin: 0;
@@ -272,14 +271,7 @@ ul li {
     margin-bottom: 8px;
 }
 
-/* Short bio */
-.short-bio {
-    font-size: 14px;
-    color: #555;
-    flex-grow: 1;
-    display: flex;
-    align-items: center;     
-}
+
 /* Links */
 .links {
     margin-top: 8px;
@@ -313,23 +305,43 @@ ul li {
     background: #005f8d;
 }
 
-/* Full bio (hidden by default) */
-.full-bio {
-    display: none;
-    margin-top: 10px;
-    font-size: 13px;
-    color: #333;
-    line-height: 1.5;
-}
-.bio-text {
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.bio-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
+/* Bio text */
+.bio-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Expanded */
 .bio-text.expanded {
-  -webkit-line-clamp: unset;
+    -webkit-line-clamp: unset;
+}
+
+/* Button ALWAYS stays aligned */
+.toggle-btn {
+    margin-top: auto; /* 
+    padding: 8px 12px;
+    border: none;
+    background: #0073b1;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.2s ease;
+}
+
+.toggle-btn:hover {
+    background: #005f8d;
 }
 /* Responsive */
 @media (max-width: 768px) {
