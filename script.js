@@ -7,22 +7,21 @@ fetch('SteeringBios.json')
     data.forEach((member, index) => {
       const card = document.createElement('section');
       card.className = 'member-card';
-      card.setAttribute('role', 'region'); // landmark for screen readers
-      card.setAttribute('tabindex', '0');  // make focusable via keyboard
+      card.setAttribute('role', 'region');
+      card.setAttribute('tabindex', '0');
 
-      // ID for ARIA labelling
       const nameId = `member-name-${index}`;
       card.setAttribute('aria-labelledby', nameId);
 
       // Image
-      if(member.headshot){
+      if (member.headshot) {
         const img = document.createElement('img');
         img.src = member.headshot;
         img.alt = member.altText || member.name;
         card.appendChild(img);
       }
 
-      // Card content
+      // Content container
       const content = document.createElement('div');
       content.className = 'card-content';
 
@@ -33,7 +32,7 @@ fetch('SteeringBios.json')
       content.appendChild(nameEl);
 
       // Pronouns
-      if(member.pronouns){
+      if (member.pronouns) {
         const pronounsEl = document.createElement('div');
         pronounsEl.className = 'pronouns';
         pronounsEl.textContent = member.pronouns;
@@ -41,7 +40,7 @@ fetch('SteeringBios.json')
       }
 
       // Title
-      if(member.title){
+      if (member.title) {
         const titleEl = document.createElement('div');
         titleEl.className = 'title';
         titleEl.textContent = member.title;
@@ -49,43 +48,32 @@ fetch('SteeringBios.json')
       }
 
       // Short bio
-      if(member.shortBio){
+      if (member.shortBio) {
         const shortBioEl = document.createElement('div');
         shortBioEl.className = 'short-bio';
         shortBioEl.textContent = member.shortBio;
         content.appendChild(shortBioEl);
       }
 
-      // Full bio toggle
-      if(member.fullBio){
-        const fullBioEl = document.createElement('div');
+      // Full bio (hidden)
+      let fullBioEl = null;
+      if (member.fullBio) {
+        fullBioEl = document.createElement('div');
         fullBioEl.className = 'full-bio';
         fullBioEl.textContent = member.fullBio;
-        content.appendChild(fullBioEl);
-
-        const toggleBtn = document.createElement('button');
-        toggleBtn.className = 'toggle-btn';
-        toggleBtn.setAttribute('aria-expanded', 'false');
-        toggleBtn.setAttribute('aria-controls', `full-bio-${index}`);
-        toggleBtn.id = `toggle-btn-${index}`;
-        toggleBtn.textContent = 'Read More';
-
         fullBioEl.id = `full-bio-${index}`;
-
-        toggleBtn.addEventListener('click', () => {
-          const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
-          toggleBtn.setAttribute('aria-expanded', String(!expanded));
-          fullBioEl.style.display = expanded ? 'none' : 'block';
-          toggleBtn.textContent = expanded ? 'Read More' : 'Read Less';
-        });
-
-        content.appendChild(toggleBtn);
+        content.appendChild(fullBioEl);
       }
 
+      // Footer
+      const footer = document.createElement('div');
+      footer.className = 'card-footer';
+
       // Links
-      if(member.links && member.links.length){
+      if (member.links && member.links.length) {
         const linksDiv = document.createElement('div');
         linksDiv.className = 'links';
+
         member.links.forEach(link => {
           const a = document.createElement('a');
           a.href = link.url || '#';
@@ -94,9 +82,32 @@ fetch('SteeringBios.json')
           a.textContent = link.type;
           linksDiv.appendChild(a);
         });
-        content.appendChild(linksDiv);
+
+        footer.appendChild(linksDiv);
       }
 
+      // Toggle button
+      if (fullBioEl) {
+        const toggleBtn = document.createElement('button');
+        toggleBtn.className = 'toggle-btn';
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleBtn.setAttribute('aria-controls', fullBioEl.id);
+        toggleBtn.id = `toggle-btn-${index}`;
+        toggleBtn.textContent = 'Read More';
+
+        toggleBtn.addEventListener('click', () => {
+          const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+          toggleBtn.setAttribute('aria-expanded', String(!expanded));
+          fullBioEl.style.display = expanded ? 'none' : 'block';
+          toggleBtn.textContent = expanded ? 'Read More' : 'Read Less';
+        });
+
+        footer.appendChild(toggleBtn);
+      }
+
+      content.appendChild(footer);
+
+      // Assemble card
       card.appendChild(content);
       container.appendChild(card);
     });
