@@ -321,7 +321,16 @@ ul li {
     color: #333;
     line-height: 1.5;
 }
+.bio-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
+.bio-text.expanded {
+  -webkit-line-clamp: unset;
+}
 /* Responsive */
 @media (max-width: 768px) {
     .checkbtn {
