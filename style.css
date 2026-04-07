@@ -282,9 +282,7 @@ ul li {
 }
 /* Links */
 .links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
+    margin-top: 8px;
 }
 .links a {
     display: inline-block;
