@@ -48,14 +48,6 @@ fetch('SteeringBios.json')
         content.appendChild(titleEl);
       }
 
-      // Short bio
-      if(member.shortBio){
-        const shortBioEl = document.createElement('div');
-        shortBioEl.className = 'short-bio';
-        shortBioEl.textContent = member.shortBio;
-        content.appendChild(shortBioEl);
-      }
-
       // Full bio + Read More button
       let fullBioEl, toggleBtn;
       if(member.fullBio){
