@@ -242,10 +242,12 @@ ul li {
 }
 
 /* Content */
+
 .card-content {
     padding: 16px;
     display: flex;
     flex-direction: column;
+    height: 100%; /* important */
 }
 
 /* Name */
