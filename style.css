@@ -276,14 +276,10 @@ ul li {
 .short-bio {
     font-size: 14px;
     color: #555;
-    margin-bottom: 10px;
     flex-grow: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    display: flex;
+    align-items: center;     
 }
-
 /* Links */
 .links {
     display: flex;
