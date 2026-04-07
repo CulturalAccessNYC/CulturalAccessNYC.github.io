@@ -15,7 +15,7 @@ fetch('SteeringBios.json')
       card.setAttribute('aria-labelledby', nameId);
 
       // Image
-      if(member.headshot){
+      if (member.headshot) {
         const img = document.createElement('img');
         img.src = member.headshot;
         img.alt = member.altText || member.name;
@@ -33,7 +33,7 @@ fetch('SteeringBios.json')
       content.appendChild(nameEl);
 
       // Pronouns
-      if(member.pronouns){
+      if (member.pronouns) {
         const pronounsEl = document.createElement('div');
         pronounsEl.className = 'pronouns';
         pronounsEl.textContent = member.pronouns;
@@ -41,42 +41,61 @@ fetch('SteeringBios.json')
       }
 
       // Title
-      if(member.title){
+      if (member.title) {
         const titleEl = document.createElement('div');
         titleEl.className = 'title';
         titleEl.textContent = member.title;
         content.appendChild(titleEl);
       }
 
-      // Full bio + Read More button
-      let fullBioEl, toggleBtn;
-      if(member.fullBio){
-        fullBioEl = document.createElement('div');
-        fullBioEl.className = 'full-bio';
-        fullBioEl.textContent = member.fullBio;
-        fullBioEl.id = `full-bio-${index}`;
-        content.appendChild(fullBioEl);
+      // Bios
+      if (member.fullBio) {
+        const bioContainer = document.createElement('div');
+        bioContainer.className = 'bio-container';
 
-        toggleBtn = document.createElement('button');
+        const bioText = document.createElement('p');
+        bioText.className = 'bio-text';
+        bioText.textContent = member.fullBio;
+        bioText.id = `bio-${index}`;
+
+        const toggleBtn = document.createElement('button');
         toggleBtn.className = 'toggle-btn';
         toggleBtn.setAttribute('aria-expanded', 'false');
-        toggleBtn.setAttribute('aria-controls', fullBioEl.id);
-        toggleBtn.id = `toggle-btn-${index}`;
+        toggleBtn.setAttribute('aria-controls', bioText.id);
         toggleBtn.textContent = 'Read More';
-        content.appendChild(toggleBtn);
 
+        // Bio logic
         toggleBtn.addEventListener('click', () => {
-          const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
-          toggleBtn.setAttribute('aria-expanded', String(!expanded));
-          fullBioEl.style.display = expanded ? 'none' : 'block';
-          toggleBtn.textContent = expanded ? 'Read More' : 'Read Less';
+          const isOpen = bioText.classList.contains('expanded');
+
+          // Close bios
+          document.querySelectorAll('.bio-text').forEach(b => {
+            b.classList.remove('expanded');
+          });
+
+          document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.textContent = 'Read More';
+            btn.setAttribute('aria-expanded', 'false');
+          });
+
+          // Open bios
+          if (!isOpen) {
+            bioText.classList.add('expanded');
+            toggleBtn.textContent = 'Read Less';
+            toggleBtn.setAttribute('aria-expanded', 'true');
+          }
         });
+
+        bioContainer.appendChild(bioText);
+        bioContainer.appendChild(toggleBtn);
+        content.appendChild(bioContainer);
       }
 
       // Links 
-      if(member.links && member.links.length){
+      if (member.links && member.links.length) {
         const linksDiv = document.createElement('div');
         linksDiv.className = 'links';
+
         member.links.forEach(link => {
           const a = document.createElement('a');
           a.href = link.url || '#';
@@ -85,6 +104,7 @@ fetch('SteeringBios.json')
           a.textContent = link.type;
           linksDiv.appendChild(a);
         });
+
         content.appendChild(linksDiv);
       }
 
