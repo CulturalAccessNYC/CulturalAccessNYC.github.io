@@ -20,6 +20,12 @@ fetch('SteeringBios.json')
         img.src = member.headshot;
         img.alt = member.altText || member.name;
         card.appendChild(img);
+      } else {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'no-photo';
+        placeholder.setAttribute('aria-hidden', 'true');
+        placeholder.textContent = '◎';
+        card.appendChild(placeholder);
       }
 
       // Content container
