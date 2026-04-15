@@ -1,30 +1,39 @@
-// Fetch
+// Fetch and render steering committee members
 fetch('SteeringBios.json')
   .then(response => response.json())
   .then(data => {
     const container = document.getElementById('members-container');
+    if (!container) return;
 
     data.forEach((member, index) => {
-      const card = document.createElement('section');
+      const card = document.createElement('article');
       card.className = 'member-card';
-      card.setAttribute('role', 'region');
-      card.setAttribute('tabindex', '0');
 
       // ARIA labeling
       const nameId = `member-name-${index}`;
       card.setAttribute('aria-labelledby', nameId);
 
-      // Image
+      // Image or initials placeholder
       if (member.headshot) {
         const img = document.createElement('img');
         img.src = member.headshot;
-        img.alt = member.altText || member.name;
+        img.alt = member.altText || `Headshot of ${member.name}`;
+        img.loading = 'lazy';
         card.appendChild(img);
       } else {
         const placeholder = document.createElement('div');
         placeholder.className = 'no-photo';
         placeholder.setAttribute('aria-hidden', 'true');
-        placeholder.textContent = '◎';
+        const initials = member.name
+          .split(' ')
+          .map(n => n[0])
+          .join('')
+          .slice(0, 2)
+          .toUpperCase();
+        const span = document.createElement('span');
+        span.className = 'no-photo-initials';
+        span.textContent = initials;
+        placeholder.appendChild(span);
         card.appendChild(placeholder);
       }
 
@@ -40,21 +49,21 @@ fetch('SteeringBios.json')
 
       // Pronouns
       if (member.pronouns) {
-        const pronounsEl = document.createElement('div');
+        const pronounsEl = document.createElement('p');
         pronounsEl.className = 'pronouns';
         pronounsEl.textContent = member.pronouns;
         content.appendChild(pronounsEl);
       }
 
       // Title
-      if (member.title) {
-        const titleEl = document.createElement('div');
+      if (member.title && member.title !== member.name) {
+        const titleEl = document.createElement('p');
         titleEl.className = 'title';
         titleEl.textContent = member.title;
         content.appendChild(titleEl);
       }
 
-      // Bios
+      // Bio
       if (member.fullBio) {
         const bioContainer = document.createElement('div');
         bioContainer.className = 'bio-container';
@@ -70,21 +79,17 @@ fetch('SteeringBios.json')
         toggleBtn.setAttribute('aria-controls', bioText.id);
         toggleBtn.textContent = 'Read More';
 
-        // Bio logic
         toggleBtn.addEventListener('click', () => {
           const isOpen = bioText.classList.contains('expanded');
 
-          // Close bios
-          document.querySelectorAll('.bio-text').forEach(b => {
-            b.classList.remove('expanded');
-          });
-
+          // Close all other bios
+          document.querySelectorAll('.bio-text').forEach(b => b.classList.remove('expanded'));
           document.querySelectorAll('.toggle-btn').forEach(btn => {
             btn.textContent = 'Read More';
             btn.setAttribute('aria-expanded', 'false');
           });
 
-          // Open bios
+          // Toggle this one
           if (!isOpen) {
             bioText.classList.add('expanded');
             toggleBtn.textContent = 'Read Less';
@@ -97,25 +102,41 @@ fetch('SteeringBios.json')
         content.appendChild(bioContainer);
       }
 
-      // Links 
+      // Links
       if (member.links && member.links.length) {
         const linksDiv = document.createElement('div');
         linksDiv.className = 'links';
 
         member.links.forEach(link => {
+          // Skip malformed links (social handles without URLs)
+          const url = link.url && link.url.startsWith('http') ? link.url : null;
+          if (!url) return;
+
           const a = document.createElement('a');
-          a.href = link.url || '#';
+          a.href = url;
           a.target = '_blank';
           a.rel = 'noopener noreferrer';
           a.textContent = link.type;
+          // Accessible label includes the person's name for context
+          a.setAttribute('aria-label', `${link.type} — ${member.name} (opens in new tab)`);
           linksDiv.appendChild(a);
         });
 
-        content.appendChild(linksDiv);
+        if (linksDiv.children.length > 0) {
+          content.appendChild(linksDiv);
+        }
       }
 
       card.appendChild(content);
       container.appendChild(card);
     });
   })
-  .catch(err => console.error('Error:', err));
+  .catch(err => {
+    console.error('Error loading steering committee:', err);
+    const container = document.getElementById('members-container');
+    if (container) {
+      const msg = document.createElement('p');
+      msg.textContent = 'Committee information could not be loaded. Please try again later.';
+      container.appendChild(msg);
+    }
+  });
