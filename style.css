@@ -1,27 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
 
-/* ── Tokens ── */
 :root {
-  --navy:        #003087;
-  --navy-mid:    #00256e;
-  --navy-light:  #1a4aad;
-  --amber:       #0057d8;
-  --amber-light: #3a7ff5;
-  --amber-pale:  #e8f0fe;
+  /* Core brand (deep indigo base) */
+  --navy:        #1e2a44;
+  --navy-mid:    #162033;
+  --navy-light:  #2f4f7a;
+
+  /* Primary accent (teal for clarity + accessibility) */
+  --amber:       #0f766e;
+  --amber-light: #14b8a6;
+  --amber-pale:  #e6fffb;
+
+  /* Secondary accent*/
+  /* (kept under same naming system to avoid breaking styles) */
+
+  /* Neutrals */
   --white:       #ffffff;
-  --off-white:   #f4f7ff;
-  --stone:       #e2e8f5;
-  --text-primary:   #0a0a0a;
-  --text-secondary: #1a1a2e;
-  --text-muted:     #2a3d66;
-  --border:         #bfcde8;
-  --focus-ring:  #0057d8;
+  --off-white:   #f7f9fc;
+  --stone:       #e2e8f0;
+
+  /* Text (high contrast) */
+  --text-primary:   #0b1220;
+  --text-secondary: #1f2a44;
+  --text-muted:     #475569;
+
+  /* UI elements */
+  --border:         #cbd5e1;
+  --focus-ring:     #f97316; /* warm coral/orange for visibility */
+
+  /* Shape + motion */
   --radius-sm:   6px;
   --radius-md:   12px;
   --radius-lg:   20px;
-  --shadow-sm:   0 2px 8px rgba(13,27,42,0.06);
-  --shadow-md:   0 8px 28px rgba(13,27,42,0.10);
-  --shadow-lg:   0 20px 50px rgba(13,27,42,0.14);
+
+  /* Shadows tuned slightly cooler for new palette */
+  --shadow-sm:   0 2px 8px rgba(15, 23, 42, 0.06);
+  --shadow-md:   0 8px 28px rgba(15, 23, 42, 0.10);
+  --shadow-lg:   0 20px 50px rgba(15, 23, 42, 0.14);
+
   --transition:  0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -132,7 +148,7 @@ p {
   flex-shrink: 0;
   transition: color var(--transition);
 }
-.logo:hover { color: #90c0ff; }
+.logo:hover { color: #5eead4; }
 .logo:focus-visible { outline-color: var(--amber); border-radius: 4px; }
 
 /* ── Nav ── */
@@ -161,8 +177,8 @@ nav { position: relative; }
 }
 .nav-list a:hover,
 .nav-list a[aria-current="page"] {
-  color: #90c0ff;
-  background: rgba(0,87,216,0.18);
+  color: #5eead4;
+  background: rgba(15,118,110,0.18);
 }
 .nav-list a:focus-visible { outline-color: var(--amber); }
 
@@ -187,8 +203,8 @@ nav { position: relative; }
   transition: border-color var(--transition), background var(--transition);
 }
 .checkbtn:hover {
-  border-color: #90c0ff;
-  background: rgba(0,87,216,0.18);
+  border-color: #5eead4;
+  background: rgba(15,118,110,0.18);
 }
 
 /* ── Hero ── */
@@ -731,7 +747,7 @@ nav { position: relative; }
 }
 .venn-b {
   top: 0; right: 0;
-  background: rgba(0,87,216,0.18);
+  background: rgba(15,118,110,0.18);
   border: 2px solid rgba(0,87,216,0.4);
   color: #001f5c;
 }
@@ -872,7 +888,7 @@ nav { position: relative; }
 .accordion-btn:hover { background: rgba(255,255,255,0.08); }
 .accordion-btn[aria-expanded="true"] { background: rgba(0,87,216,0.25); }
 .accordion-btn:focus-visible { outline: 3px solid var(--amber-light); outline-offset: -3px; }
-.accordion-icon { font-size: 1.4rem; font-weight: 300; line-height: 1; color: #90c0ff; flex-shrink: 0; margin-left: 1rem; }
+.accordion-icon { font-size: 1.4rem; font-weight: 300; line-height: 1; color: #5eead4; flex-shrink: 0; margin-left: 1rem; }
 .accordion-body { padding: 0.1rem 1.5rem 1.25rem; }
 .accordion-body p { font-size: 0.97rem; color: rgba(255,255,255,0.95); max-width: 68ch; }
 
@@ -906,7 +922,7 @@ nav { position: relative; }
 .timeline-marker--active {
   border-color: var(--amber);
   background: var(--amber);
-  box-shadow: 0 0 0 4px rgba(0,87,216,0.18);
+  box-shadow: 0 0 0 4px rgba(15,118,110,0.18);
 }
 .timeline-year {
   font-size: 0.88rem;
@@ -1132,7 +1148,7 @@ nav { position: relative; }
   font-family: 'Outfit', sans-serif;
   font-size: 2rem;
   font-weight: 800;
-  color: #90c0ff;
+  color: #5eead4;
   line-height: 1;
   flex-shrink: 0;
   width: 2.5rem;
