@@ -6,7 +6,7 @@
   --navy-mid:    #00256e;
   --navy-light:  #1a4aad;
   --amber:       #0057d8;
-  --amber-light: #3a7ff5;
+  --amber-light: #7ab8ff;
   --amber-pale:  #e8f0fe;
   --white:       #ffffff;
   --off-white:   #f4f7ff;
@@ -973,7 +973,7 @@ nav { position: relative; }
   padding: 0.2rem 0.65rem;
   color: #aeccff;
 }
-.initiative-status--dev { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.55); }
+.initiative-status--dev { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.82); }
 .initiative-card h3 { color: var(--white); margin-bottom: 0.65rem; font-size: 1.05rem; }
 .initiative-card p { color: rgba(255,255,255,0.82); font-size: 0.88rem; max-width: none; margin-bottom: 1rem; }
 .initiative-details {
