@@ -104,12 +104,23 @@
     </div>
    <div class="two-col-visual" aria-hidden="true">
   <style>
-    .two-col-visual .venn-circle { color: #ffffff; }
-    .two-col-visual .venn-a { background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.45); }
-    .two-col-visual .venn-b { background: rgba(255,255,255,0.10); border-color: rgba(144,192,255,0.55); }
-    .two-col-visual .venn-c { background: rgba(255,255,255,0.13); border-color: rgba(144,192,255,0.4); }
-    .two-col-visual .venn-center { color: #ffffff; }
-  </style>
+  .two-col-visual .venn-circle { color: #ffffff; }
+  .two-col-visual .venn-a { background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.45); }
+  .two-col-visual .venn-b { background: rgba(255,255,255,0.10); border-color: rgba(144,192,255,0.55); }
+  .two-col-visual .venn-c { background: rgba(255,255,255,0.13); border-color: rgba(144,192,255,0.4); }
+  .two-col-visual .venn-center {
+    color: #ffffff;
+    background: var(--navy);
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+</style>
   <div class="venn-diagram">
     <div class="venn-circle venn-a"><span>Race &amp;<br>Ethnicity</span></div>
     <div class="venn-circle venn-b"><span>Disability</span></div>
